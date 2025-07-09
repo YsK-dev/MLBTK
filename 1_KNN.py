@@ -1,10 +1,74 @@
 from sklearn.datasets import load_breast_cancer
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, classification_report,confusion_matrix
 import pandas as pd
+import matplotlib.pyplot as plt 
 
 
-cancer = load_breast_cancer()
+def load_and_prepare_data():
+    """Load breast cancer dataset and prepare features and target."""
+    cancer = load_breast_cancer()
+    
+    df = pd.DataFrame(data=cancer.data, columns=cancer.feature_names)
+    df['target'] = cancer.target
+    
+    x = df[cancer.feature_names]
+    y = df['target']
+    
+    return x, y
 
 
-df = pd.DataFrame(data=cancer.data, columns=cancer.feature_names)
+def train_knn_model(x_train, y_train, n_neighbors=5):
+    """Train KNN classifier with specified number of neighbors."""
+    knn = KNeighborsClassifier(n_neighbors=n_neighbors)
+    knn.fit(x_train, y_train)
+    return knn
 
-df['target'] = cancer.target
+
+def evaluate_model(model, x_test, y_test):
+    """Evaluate the trained model and print results."""
+    y_pred = model.predict(x_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    
+    print(f"Accuracy: {accuracy:.4f}")
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))
+    
+    return y_pred
+
+
+def main():
+    """Main function to execute the KNN workflow."""
+    # Load and prepare data
+    x, y = load_and_prepare_data()
+    
+    # Split data into training and testing sets
+    x_train, x_test, y_train, y_test = train_test_split(
+        x, y, test_size=0.2, random_state=42
+    )
+    
+    # Train the model
+    knn_model = train_knn_model(x_train, y_train, n_neighbors=5)
+    
+    # Evaluate the model
+    predictions = evaluate_model(knn_model, x_test, y_test)
+    conf_matrix = confusion_matrix(    y_test, predictions)
+    print("\nConfusion Matrix:")
+    print(conf_matrix)  
+
+    plt.figure(figsize=(10, 6))
+    neighbors_range = range(1, 21)
+    accuracy_scores = [train_knn_model(x_train, y_train, n).score(x_test, y_test) for n in neighbors_range]
+    plt.plot(neighbors_range, accuracy_scores)
+    plt.title('KNN Accuracy vs Number of Neighbors')
+    plt.xlabel('Number of Neighbors')
+    plt.ylabel('Accuracy')
+    plt.xticks(range(1, 21))
+    plt.grid()
+    plt.show()  
+
+
+
+if __name__ == "__main__":
+    main()
