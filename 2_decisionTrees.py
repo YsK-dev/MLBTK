@@ -1,0 +1,57 @@
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+
+
+
+iris = load_iris()
+
+X = iris.data
+y = iris.target
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=39)
+
+# decision tree model train 
+from sklearn.tree import DecisionTreeClassifier 
+
+# Create a Decision Tree Classifier
+clf = DecisionTreeClassifier(criterion='gini',max_depth=5, random_state=42)
+
+clf.fit(X_train, y_train) 
+
+# Evaluate the model
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix 
+y_pred = clf.predict(X_test)   
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy:.4f}")
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
+print("\nConfusion Matrix:")
+print(confusion_matrix(y_test, y_pred))
+
+# Visualize the decision tree
+from sklearn.tree import plot_tree
+import matplotlib.pyplot as plt
+plt.figure(figsize=(12, 8))
+plot_tree(clf, filled=True, feature_names=iris.feature_names, class_names=iris.target_names)
+plt.title("Decision Tree Visualization")
+plt.show()
+
+# feature importance
+import pandas as pd 
+feature_importances = clf.feature_importances_
+importance_df = pd.DataFrame({
+    'Feature': iris.feature_names,
+    'Importance': feature_importances
+}).sort_values(by='Importance', ascending=False)
+print("\nFeature Importances:")
+print(importance_df)        
+
+for i in range(len(importance_df)):
+    print(f"Feature: {importance_df['Feature'].iloc[i]}, Importance: {importance_df['Importance'].iloc[i]:.4f}")
+# Plot feature importances
+plt.figure(figsize=(10, 6))
+plt.barh(importance_df['Feature'], importance_df['Importance'], color='skyblue')
+plt.xlabel('Importance')
+plt.title('Feature Importances from Decision Tree')
+plt.show()

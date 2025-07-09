@@ -68,6 +68,25 @@ def main():
     plt.grid()
     plt.show()  
 
+# knn  regression
+    # Example of KNN regression (not part of the original code)
+    from sklearn.neighbors import KNeighborsRegressor
+    from sklearn.datasets import make_regression
+    import numpy as np
+    X = np.random.rand(100, 1) * 10  # 100 samples, 1 feature
+    y = 2 * X.squeeze() + np.random.randn(100) * 2
+    from sklearn.model_selection import train_test_split
+    from sklearn.datasets import make_regression    
+
+    X, y = make_regression(n_samples=100, n_features=1, noise=0.1)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    knn_regressor = KNeighborsRegressor(n_neighbors=5)
+    knn_regressor.fit(X_train, y_train)
+    y_pred = knn_regressor.predict(X_test)
+
+    print(f"Regression Predictions: {y_pred[:5]}")
+
 
 
 if __name__ == "__main__":
