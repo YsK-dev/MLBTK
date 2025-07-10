@@ -55,3 +55,34 @@ plt.barh(importance_df['Feature'], importance_df['Importance'], color='skyblue')
 plt.xlabel('Importance')
 plt.title('Feature Importances from Decision Tree')
 plt.show()
+
+# %%
+
+from sklearn.datasets import load_iris
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import plot_tree
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+import pandas as pd 
+
+import matplotlib.pyplot as plt
+
+load_iris = load_iris()
+
+for pairidx, pair in enumerate([[0, 1], [0, 2], [0, 3], [1, 2], [1, 3], [2, 3]]):
+    X = load_iris.data[:, pair]
+    y = load_iris.target
+
+    # Create a Decision Tree Classifier
+    clf = DecisionTreeClassifier(criterion='gini', max_depth=5, random_state=42)
+    clf.fit(X, y)
+
+    plt.figure(figsize=(8, 6))
+    plot_tree(clf, filled=True, feature_names=[load_iris.feature_names[i] for i in pair],
+              class_names=load_iris.target_names)
+    plt.title(f"Decision Tree Visualization for Features {pair}")
+    plt.show()
+
+# %%
+
+# %%
