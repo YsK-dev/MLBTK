@@ -108,3 +108,38 @@ print(f"Mean Squared Error: {mean_squared_error:.4f}")
 print(f"R^2 Score: {r2:.4f}")   
 
 # %%
+
+#%%
+from sklearn.tree import DecisionTreeRegressor
+import numpy as np  
+import matplotlib.pyplot as plt
+
+#create a simple dataset
+X = np.sort(np.random.rand(10, 1) * 10, axis=0)
+y = np.sin(X).ravel() + np.random.normal(0, 0.1, X.shape[0])  # add some noise
+
+# Create a Decision Tree Regressor
+tree_regressor = DecisionTreeRegressor(max_depth=2, random_state=42)
+tree_regressor.fit(X, y)        
+# create one more regressor with different depth
+tree_regressor2 = DecisionTreeRegressor(max_depth=50, random_state=42)
+tree_regressor2.fit(X, y)   
+
+# Predict using the trained model
+y_pred = tree_regressor.predict(X)
+y_pred2 = tree_regressor2.predict(X)
+# Plot the results
+plt.figure(figsize=(10, 6))
+plt.scatter(X, y, color='black', label='Data Points')
+plt.plot(X, y_pred, color='blue', label='Decision Tree (max_depth=3)')
+plt.plot(X, y_pred2, color='red', label='Decision Tree (max_depth=5)')
+plt.title('Decision Tree Regression')
+plt.xlabel('X')
+plt.ylabel('y')
+plt.legend()
+plt.grid()
+plt.show()
+
+
+
+# %%
