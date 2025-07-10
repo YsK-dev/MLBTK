@@ -84,5 +84,27 @@ for pairidx, pair in enumerate([[0, 1], [0, 2], [0, 3], [1, 2], [1, 3], [2, 3]])
     plt.show()
 
 # %%
+from sklearn.datasets import load_diabetes
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeRegressor 
+from sklearn.metrics import mean_squared_error, r2_score
+ 
+diabets = load_diabetes()
+X = diabets.data
+y = diabets.target
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=39)
+
+tree_regressor = DecisionTreeRegressor(max_depth=5, random_state=42)
+tree_regressor.fit(X_train, y_train)    
+
+y_pred = tree_regressor.predict(X_test)
+
+mean_squared_error = mean_squared_error(y_test, y_pred)
+rmse = mean_squared_error ** 0.5
+print(f"Root Mean Squared Error: {rmse:.4f}")   
+r2 = r2_score(y_test, y_pred)
+print(f"Mean Squared Error: {mean_squared_error:.4f}")
+print(f"R^2 Score: {r2:.4f}")   
 
 # %%
