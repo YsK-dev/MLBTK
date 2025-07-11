@@ -1,6 +1,9 @@
+# %%
 from sklearn.datasets import load_breast_cancer
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import train_test_split
+
+from sklearn.datasets import make_regression
+from sklearn.neighbors import KNeighborsRegressor
 from sklearn.metrics import accuracy_score, classification_report,confusion_matrix
 import pandas as pd
 import matplotlib.pyplot as plt 
@@ -40,12 +43,13 @@ def evaluate_model(model, x_test, y_test):
 
 def main():
     """Main function to execute the KNN workflow."""
+    from sklearn.model_selection import train_test_split
     # Load and prepare data
     x, y = load_and_prepare_data()
     
     # Split data into training and testing sets
     x_train, x_test, y_train, y_test = train_test_split(
-        x, y, test_size=0.2, random_state=42
+        x, y, test_size=0.3, random_state=40
     )
     
     # Train the model
@@ -91,3 +95,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# %%
