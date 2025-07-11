@@ -65,6 +65,9 @@ plt.barh(importance_df['Feature'], importance_df['Importance'], color='skyblue')
 plt.xlabel('Importance')
 plt.title('Feature Importances from Logistic Regression')
 plt.show()  
+# show differences in feature importances
+
+
 
 
 # %%
