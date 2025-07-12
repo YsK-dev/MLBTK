@@ -176,68 +176,103 @@ import matplotlib.pyplot as plt
 X_moons, _ = make_moons(n_samples=300, noise=0.05
 , random_state=42)
 X_circles, _ = make_circles(n_samples=300, noise=0.05, factor=0.5, random_state=42)
-# Create clustering models
+clustering_names = ["KMeans", "DBSCAN", "Agglomerative Clustering", "MiniBatchKMeans", "Birch Clustering"]
+from sklearn.cluster import MiniBatchKMeans, Birch
+# Create clustering models for moons
 kmeans_moons = KMeans(n_clusters=2, random_state=42)
 dbscan_moons = DBSCAN(eps=0.2, min_samples=5)
 agglo_moons = AgglomerativeClustering(n_clusters=2)
+minibatch_kmeans_moons = MiniBatchKMeans(n_clusters=2, random_state=42)
+birch_moons = Birch(n_clusters=2)
 # Fit the models to the data
 labels_kmeans_moons = kmeans_moons.fit_predict(X_moons)
 labels_dbscan_moons = dbscan_moons.fit_predict(X_moons)
-
 labels_agglo_moons = agglo_moons.fit_predict(X_moons)
+labels_minibatch_kmeans_moons = minibatch_kmeans_moons.fit_predict(X_moons)
+labels_birch_moons = birch_moons.fit_predict(X_moons) 
 # Plot KMeans results for moons
 plt.figure(figsize=(12, 4))
-plt.subplot(1, 3, 1)
+plt.subplot(1, 5, 1)
 plt.scatter(X_moons[:, 0], X_moons[:, 1], c=labels_kmeans_moons, s=30, cmap='viridis')
 plt.title('KMeans Clustering (Moons)')
 plt.xlabel('Feature 1')
 plt.ylabel('Feature 2')
-
 # Plot DBSCAN results for moons
-plt.subplot(1, 3, 2)
+plt.subplot(1, 5, 2)
 plt.scatter(X_moons[:, 0], X_moons[:, 1], c=labels_dbscan_moons, s=30, cmap='viridis')
 plt.title('DBSCAN Clustering (Moons)')
 plt.xlabel('Feature 1')
 plt.ylabel('Feature 2') 
-
 # Plot Agglomerative Clustering results for moons
-plt.subplot(1, 3, 3)
+plt.subplot(1, 5, 3)
 plt.scatter(X_moons[:, 0], X_moons[:, 1], c=labels_agglo_moons, s=30, cmap='viridis')
 plt.title('Agglomerative Clustering (Moons)')
 plt.xlabel('Feature 1')
-plt.ylabel('Feature 2')    
+plt.ylabel('Feature 2')
+
+# Plot MiniBatchKMeans results for moons
+plt.subplot(1, 5, 4)
+plt.scatter(X_moons[:, 0], X_moons[:, 1], c=labels_minibatch_kmeans_moons, s=30, cmap='viridis')
+plt.title('MiniBatchKMeans Clustering (Moons)')
+plt.xlabel('Feature 1')
+plt.ylabel('Feature 2') 
+# Plot Birch results for moons
+plt.subplot(1, 5, 5)
+plt.scatter(X_moons[:, 0], X_moons[:, 1], c=labels_birch_moons, s=30, cmap='viridis')
+plt.title('Birch Clustering (Moons)')
+plt.xlabel('Feature 1')
+plt.ylabel('Feature 2')
 plt.tight_layout()
 plt.show()
 
-# Create clustering models for circles
-kmeans_circles = KMeans(n_clusters=2, random_state=42)
-dbscan_circles = DBSCAN(eps=0.2, min_samples=5)
-agglo_circles = AgglomerativeClustering(n_clusters=2)
+# Create clustering models for moons
+kmeans_moons = KMeans(n_clusters=2, random_state=42) 
+
+dbscan_moons = DBSCAN(eps=0.2, min_samples=5)
+agglo_moons = AgglomerativeClustering(n_clusters=2)
+minibatch_kmeans_moons = MiniBatchKMeans(n_clusters=2, random_state=42)
+birch_moons = Birch(n_clusters=2)
 # Fit the models to the data
-labels_kmeans_circles = kmeans_circles.fit_predict(X_circles)
-labels_dbscan_circles = dbscan_circles.fit_predict(X_circles)
-labels_agglo_circles = agglo_circles.fit_predict(X_circles)
+labels_kmeans_moons = kmeans_moons.fit_predict(X_moons)
+labels_dbscan_moons = dbscan_moons.fit_predict(X_moons)
+labels_agglo_moons = agglo_moons.fit_predict(X_moons)
+labels_minibatch_kmeans_moons = minibatch_kmeans_moons.fit_predict(X_moons)
+labels_birch_moons = birch_moons.fit_predict(X_moons)   
+
 # Plot KMeans results for circles
 plt.figure(figsize=(12, 4))
-plt.subplot(1, 3, 1)
-plt.scatter(X_circles[:, 0], X_circles[:, 1], c=labels_kmeans_circles, s=30, cmap='viridis')
+plt.subplot(1, 5, 1)
+plt.scatter(X_circles[:, 0], X_circles[:, 1], c=labels_kmeans_moons, s=30, cmap='viridis')
 plt.title('KMeans Clustering (Circles)')
 plt.xlabel('Feature 1')
-plt.ylabel('Feature 2')
+plt.ylabel('Feature 2') 
 
 # Plot DBSCAN results for circles
-plt.subplot(1, 3, 2)
-plt.scatter(X_circles[:, 0], X_circles[:, 1], c=labels_dbscan_circles, s=30, cmap='viridis')
+plt.subplot(1, 5, 2)
+plt.scatter(X_circles[:, 0], X_circles[:, 1], c=labels_dbscan_moons, s=30, cmap='viridis')
 plt.title('DBSCAN Clustering (Circles)')
 plt.xlabel('Feature 1')
 plt.ylabel('Feature 2') 
 # Plot Agglomerative Clustering results for circles
-plt.subplot(1, 3, 3)
-plt.scatter(X_circles[:, 0], X_circles[:, 1], c=labels_agglo_circles, s=30, cmap='viridis')
+plt.subplot(1, 5, 3)
+plt.scatter(X_circles[:, 0], X_circles[:, 1], c=labels_agglo_moons, s=30, cmap='viridis')
 plt.title('Agglomerative Clustering (Circles)')
+plt.xlabel('Feature 1')
+plt.ylabel('Feature 2') 
+# Plot MiniBatchKMeans results for circles
+plt.subplot(1, 5, 4)
+plt.scatter(X_circles[:, 0], X_circles[:, 1], c=labels_minibatch_kmeans_moons, s=30, cmap='viridis')
+plt.title('MiniBatchKMeans Clustering (Circles)')
+plt.xlabel('Feature 1')
+plt.ylabel('Feature 2') 
+# Plot Birch results for circles
+plt.subplot(1, 5, 5)
+plt.scatter(X_circles[:, 0], X_circles[:, 1], c=labels_birch_moons, s=30, cmap='viridis')
+plt.title('Birch Clustering (Circles)')
 plt.xlabel('Feature 1')
 plt.ylabel('Feature 2')
 plt.tight_layout()
 plt.show()  
+
 
 # %%
