@@ -144,5 +144,25 @@ plt.xlabel('Feature 1')
 plt.ylabel('Feature 2')
 plt.show()  
 
+# Create a DBSCAN model
+dbscan_moons = DBSCAN(eps=0.2, min_samples=2)
+# Fit the model to the data
+labels_moons = dbscan_moons.fit_predict(X_moons)    
+
+plt.scatter(X_moons[:, 0], X_moons[:, 1], c=labels_moons, s=30, cmap='viridis')
+plt.title('DBSCAN Clustering Results (Moons)')
+plt.xlabel('Feature 1')
+plt.ylabel('Feature 2')
+plt.show()
+
+# Create a DBSCAN model for circles
+dbscan_circles = DBSCAN(eps=0.2, min_samples=2)
+# Fit the model to the data
+labels_circles = dbscan_circles.fit_predict(X_circles)
+plt.scatter(X_circles[:, 0], X_circles[:, 1], c=labels_circles, s=30, cmap='viridis')
+plt.title('DBSCAN Clustering Results (Circles)')
+plt.xlabel('Feature 1')
+plt.ylabel('Feature 2')
+
 
 # %%
