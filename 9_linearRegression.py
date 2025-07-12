@@ -91,15 +91,45 @@ print(f"R-squared: {r2:.4f}")
 # polynomial regression
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.pipeline import make_pipeline
-# Create a polynomial regression model
-degree = 2  # Change this to the desired degree of the polynomial
-poly_model = make_pipeline(PolynomialFeatures(degree), LinearRegression())
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.datasets import load_diabetes
+from sklearn.model_selection import train_test_split
+import numpy as np
+import matplotlib.pyplot as plt
+
+X = 4 * np.random.rand(100, 1)  # 100 samples, 1 features
+y = 2 + 3 * X + 4 * X**2 + np.random.randn(100, 1)  # Quadratic relation with noise
+
+plt.scatter(X, y, color='blue', label='Data Points')
+plt.xlabel('Feature')
+plt.ylabel('Target Variable')
+plt.title('Scatter Plot of Data Points')
+plt.legend()
+plt.show()  
+
+poly_regression_model = make_pipeline(PolynomialFeatures(degree=2), LinearRegression())
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 # Fit the model to the training data
-poly_model.fit(X_train, y_train)
+poly_regression_model.fit(X_train, y_train)
 # Make predictions on the test set
-y_poly_pred = poly_model.predict(X_test)
+y_pred = poly_regression_model.predict(X_test)
 # Calculate metrics
-poly_rmse = mean_squared_error(y_test, y_poly_pred) ** 0.5
-poly_r2 = r2_score(y_test, y_poly_pred)
-print(f"Polynomial Regression - Root Mean Squared Error: {poly_rmse:.4f}")
-print(f"Polynomial Regression - R-squared: {poly_r2:.4f}")  
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+print(f"Mean Squared Error: {mse:.4f}")
+print(f"R-squared: {r2:.4f}")
+
+# Plotting the polynomial regression curve
+plt.scatter(X, y, color='blue', label='Data Points')
+X_grid = np.linspace(X.min(), X.max(), 100).reshape(-1, 1)
+y_grid = poly_regression_model.predict(X_grid)
+plt.plot(X_grid, y_grid, color='red', label='Polynomial Regression Curve')
+plt.xlabel('Feature')
+plt.ylabel('Target Variable')
+plt.title('Polynomial Regression Curve')
+plt.legend()
+plt.show()  
+
+# %%
