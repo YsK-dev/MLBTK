@@ -59,3 +59,47 @@ print(f"R-squared: {r2:.4f}")
 
 
 # %%
+from sklearn.datasets import load_diabetes
+from sklearn.linear_model import LinearRegression 
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Load the diabetes dataset
+diabetes = load_diabetes()
+
+# Split the dataset into features and target variable
+X = diabetes.data
+y = diabetes.target
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# Create a Linear Regression model
+linear_regression_model = LinearRegression()
+# Fit the model to the training data
+linear_regression_model.fit(X_train, y_train)
+
+# Make predictions on the test set
+y_pred = linear_regression_model.predict(X_test)
+# Calculate metrics
+rmse = mean_squared_error(y_test, y_pred) ** 0.5
+
+r2 = r2_score(y_test, y_pred)
+print(f"Root Mean Squared Error: {rmse:.4f}")
+print(f"R-squared: {r2:.4f}") 
+
+# %%
+
+# polynomial regression
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.pipeline import make_pipeline
+# Create a polynomial regression model
+degree = 2  # Change this to the desired degree of the polynomial
+poly_model = make_pipeline(PolynomialFeatures(degree), LinearRegression())
+# Fit the model to the training data
+poly_model.fit(X_train, y_train)
+# Make predictions on the test set
+y_poly_pred = poly_model.predict(X_test)
+# Calculate metrics
+poly_rmse = mean_squared_error(y_test, y_poly_pred) ** 0.5
+poly_r2 = r2_score(y_test, y_poly_pred)
+print(f"Polynomial Regression - Root Mean Squared Error: {poly_rmse:.4f}")
+print(f"Polynomial Regression - R-squared: {poly_r2:.4f}")  
