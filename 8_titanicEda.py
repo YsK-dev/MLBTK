@@ -34,10 +34,39 @@ sns.set_palette("Set2")
 # Revolutionary Social Network Analysis
 # Create multi-layered passenger relationship networks with advanced graph theory
 
-# Load data
-train = pd.read_csv('/kaggle/input/titanic/train.csv')
-test = pd.read_csv('/kaggle/input/titanic/test.csv')
-df = pd.concat([train, test], sort=False).reset_index(drop=True)
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+# Load data from a single CSV file
+df_full = pd.read_csv('/kaggle/input/titanic-dataset/Titanic-Dataset.csv')
+
+# Separate features (X) and target (y)
+X = df_full.drop('Survived', axis=1)
+y = df_full['Survived']
+
+# Split the data into training and testing sets (70% train, 30% test)
+# The stratify parameter ensures the proportion of survivors is the same in both sets.
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.3,
+    random_state=13,
+    stratify=y
+)
+
+# Recombine the training features and target into a single DataFrame
+train_df = pd.concat([X_train, y_train], axis=1)
+
+# Recombine the testing features and target into a single DataFrame
+test_df = pd.concat([X_test, y_test], axis=1)
+
+# If your goal is to combine them back into one DataFrame (e.g., for preprocessing)
+df = pd.concat([train_df, test_df], sort=False).reset_index(drop=True)
+
+# Display the shapes of the resulting dataframes to verify
+print("Original data shape:", df_full.shape)
+print("Train data shape:", train_df.shape)
+print("Test data shape:", test_df.shape)
+print("Combined data shape:", df_combined.shape)
 
 # Extract advanced name features
 df['Surname'] = df['Name'].str.split(',').str[0]
