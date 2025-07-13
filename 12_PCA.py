@@ -59,6 +59,37 @@ plt.show()
 
 
 
+# %%
+
+# LDA
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+from sklearn.datasets import fetch_openml
+import numpy as np  
+import matplotlib.pyplot as plt
+
+
+mnist = fetch_openml('mnist_784', version=1, as_frame=False)
+X = mnist.data
+y = mnist.target
+
+
+
+# Perform LDA
+lda = LDA(n_components=2)
+
+X_lda = lda.fit_transform(X, y)
+
+# Plot the LDA results
+plt.figure(figsize=(8, 6))
+plt.scatter(X_lda[:, 0], X_lda[:, 1], c=y.astype(int), cmap='tab10', s=10)
+plt.title('LDA of MNIST Dataset')
+plt.xlabel('Linear Discriminant 1')
+plt.ylabel('Linear Discriminant 2')
+plt.colorbar(label='Digit')
+plt.grid()
+plt.show()
+
+
 
 
 # %%
