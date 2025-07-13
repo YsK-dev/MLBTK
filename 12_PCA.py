@@ -134,3 +134,34 @@ plt.tight_layout()
 plt.show()
 
 # %%
+
+# T-SNE
+from sklearn.manifold import TSNE
+from sklearn.datasets import fetch_openml
+import numpy as np
+import matplotlib.pyplot as plt
+
+mnist = fetch_openml('mnist_784', version=1, as_frame=False)
+X = mnist.data
+y = mnist.target 
+
+# Normalize the data
+X = X / 255.0 
+
+
+# Perform t-SNE
+tsne = TSNE(n_components=2, random_state=42)
+X_tsne = tsne.fit_transform(X)  
+
+# Plot the t-SNE results
+plt.figure(figsize=(10, 8))
+plt.scatter(X_tsne[:, 0], X_tsne[:, 1], c=y.astype(int), cmap='tab10', s=10)
+plt.title('t-SNE of MNIST Dataset')
+plt.xlabel('t-SNE Component 1')
+plt.ylabel('t-SNE Component 2')
+plt.colorbar(label='Digit')
+plt.grid()
+plt.show()
+
+
+# %%
