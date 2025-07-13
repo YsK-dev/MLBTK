@@ -131,3 +131,18 @@ print("SVM Random Search Best Score:", svm_best_score_random)
 
 
 # %%
+# k-fold and leave one out cross validation
+from sklearn.model_selection import cross_val_score, LeaveOneOut        
+# Define the model
+model = RandomForestClassifier(random_state=42)
+# Perform k-fold cross-validation
+k_fold_scores = cross_val_score(model, X, y, cv=5, scoring='accuracy')
+print("K-Fold Cross-Validation Scores:", k_fold_scores)
+print("Mean K-Fold Cross-Validation Score:", np.mean(k_fold_scores))    
+
+# Perform Leave-One-Out Cross-Validation
+loo = LeaveOneOut()
+loo_scores = cross_val_score(model, X, y, cv=loo, scoring='accuracy')
+print("Leave-One-Out Cross-Validation Scores:", loo_scores)
+print("Mean Leave-One-Out Cross-Validation Score:", np.mean(loo_scores))
+# %%
