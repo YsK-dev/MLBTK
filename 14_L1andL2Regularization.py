@@ -30,4 +30,13 @@ lasso_score = lasso.score(X_test, y_test)
 print(f"Lasso Regression Score: {lasso_score:.4f}") 
 
 # %%
+# elastic net
+from sklearn.linear_model import ElasticNet
+elastic_net = ElasticNet(alpha=1.0, l1_ratio=0.5)
+elastic_net.fit(X_train, y_train)
+elastic_net_score = elastic_net.score(X_test, y_test)
+print(f"Elastic Net Score: {elastic_net_score:.4f}")        
 
+# 
+
+# %%
