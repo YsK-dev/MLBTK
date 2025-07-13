@@ -93,3 +93,44 @@ plt.show()
 
 
 # %%
+# Lda vs pca
+from sklearn.decomposition import PCA
+from sklearn.datasets import load_iris
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+import matplotlib.pyplot as plt
+
+
+# Load the iris dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# Perform PCA
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X)
+
+# Perform LDA
+lda = LDA(n_components=2)
+X_lda = lda.fit_transform(X, y)
+# Plot PCA results
+plt.figure(figsize=(12, 6))
+plt.subplot(1, 2, 1)
+plt.scatter(X_pca[:, 0], X_pca[:, 1], c=y, cmap='viridis', edgecolor='k', s=100)
+plt.title('PCA of Iris Dataset')
+plt.xlabel('Principal Component 1')
+plt.ylabel('Principal Component 2')
+plt.colorbar(label='Species')
+plt.grid()
+
+# Plot LDA results
+plt.subplot(1, 2, 2)
+plt.scatter(X_lda[:, 0], X_lda[:, 1], c=y, cmap='viridis', edgecolor='k', s=100)
+plt.title('LDA of Iris Dataset')
+plt.xlabel('Linear Discriminant 1')
+plt.ylabel('Linear Discriminant 2')
+plt.colorbar(label='Species')
+plt.grid()
+plt.tight_layout()
+plt.show()
+
+# %%
