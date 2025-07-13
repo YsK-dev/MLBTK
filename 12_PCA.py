@@ -33,3 +33,32 @@ plt.ylabel('Principal Component 2')
 plt.show()
 
 # %%
+from sklearn.decomposition import PCA
+from sklearn.datasets import load_iris
+import matplotlib.pyplot as plt
+
+# Load the iris dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# Perform PCA
+pca = PCA(n_components=3)
+X_pca = pca.fit_transform(X)
+
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection='3d', elev=120, azim=100)
+
+ax.scatter(X_pca[:, 0], X_pca[:, 1], X_pca[:, 2], c=y, cmap='viridis', edgecolor='k', s=100)
+ax.set_title('3D PCA of Iris Dataset')
+ax.set_xlabel('Principal Component 1')
+ax.set_ylabel('Principal Component 2')
+ax.set_zlabel('Principal Component 3')
+
+plt.show()
+
+
+
+
+
+# %%
