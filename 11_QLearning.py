@@ -19,8 +19,8 @@ print("Number of states:", nb_states)
 print("Number of actions:", nb_actions) 
 print("Q-table shape:", q_table.shape)
 
-episodes = 1000
-max_steps = 100
+episodes = 100
+max_steps = 10
 learning_rate = 0.1
 discount_factor = 0.99
 exploration_rate = 1.0
