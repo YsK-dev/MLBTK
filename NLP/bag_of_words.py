@@ -2,6 +2,7 @@
 # bag of words
 
 from sklearn.feature_extraction.text import CountVectorizer
+import string
 
 def create_dataset():
     """
@@ -33,3 +34,42 @@ print("Word Counts in First Document:", X[0].toarray()[0])
 print("Word Counts in Second Document:", X[1].toarray()[0]) 
 
 # %%
+# bow With IMDB Dataset
+import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
+
+imdbData=pd.read_csv("/Users/ysk/Desktop/BTK/NLP/IMDB Dataset.csv")
+# Display the first few rows of the dataset
+print(imdbData.head())
+
+# %%
+documents = imdbData['review']
+labels = imdbData['sentiment']
+
+def clean_text(text):
+    #Big letters to small
+    text = text.lower()
+    #Remove punctuation
+    text = text.translate(str.maketrans('', '', string.punctuation))
+    #Remove special characters
+    text = ''.join(e for e in text if e.isalnum() or e.isspace())
+    #remove extra spaces
+    text = ' '.join(text.split())
+    #remove numbers
+    text = ''.join([i for i in text if not i.isdigit()])
+    return text
+
+# Clean the documents
+cleaned_documents = [clean_text(doc) for doc in documents]  
+
+# show cleaned documents
+print("Cleaned Documents:")
+for doc in cleaned_documents[:5]:  # Display first 5 cleaned documents
+    print(doc)  
+
+# %%
+
+# Create a CountVectorizer instance
+vectorizer = CountVectorizer()
+# Fit and transform the cleaned documents
+X = vectorizer.fit_transform(cleaned_documents)
