@@ -43,6 +43,7 @@ imdbData=pd.read_csv("/Users/ysk/Desktop/BTK/NLP/IMDB Dataset.csv")
 print(imdbData.head())
 
 # %%
+documents = imdbData['review'].dropna()
 documents = imdbData['review']
 labels = imdbData['sentiment']
 
@@ -73,3 +74,23 @@ for doc in cleaned_documents[:5]:  # Display first 5 cleaned documents
 vectorizer = CountVectorizer()
 # Fit and transform the cleaned documents
 X = vectorizer.fit_transform(cleaned_documents)
+
+# Only print a small sample of the BoW matrix
+print("Bag of Words Representation (first 5 docs):\n", X[:5].toarray())
+
+# The rest of your code is safe
+df_bow = pd.DataFrame(X.toarray(), columns=vectorizer.get_feature_names_out())
+
+word_counts = df_bow.sum(axis=0)
+print("\nWord Frequencies (top 20):")
+word_freq = dict(zip(vectorizer.get_feature_names_out(), word_counts))
+for word, count in list(word_freq.items())[:20]:
+    print(f"{word}: {count}")
+
+print("Shape of Bag of Words Matrix:", X.shape)
+
+# %%
+
+
+
+# %%
