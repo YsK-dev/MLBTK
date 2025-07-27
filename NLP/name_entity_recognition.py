@@ -29,3 +29,13 @@ print(df)
 # morfology analysis
 for token in doc:
     print(f"{token.text} - {token.pos_} - {token.dep_} - {token.lemma_} - {token.is_stop}") 
+
+# %%
+#Parts of speech tagging
+
+# example of parts of speech tagging
+sentece = "The quick brown fox jumps over the lazy dog."
+doc = data(sentece)
+for token in doc:
+    print(f"{token.text} - {token.pos_} - {token.dep_} - {token.lemma_} - {token.is_stop}")
+# %%
