@@ -4,6 +4,10 @@
 
 # %%
 # Advanced Libraries and Revolutionary Setup
+from sklearn.neighbors import LocalOutlierFactor
+from sklearn.svm import OneClassSVM, SVC
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.linear_model import LogisticRegression
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
