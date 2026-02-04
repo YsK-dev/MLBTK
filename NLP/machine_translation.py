@@ -1,5 +1,5 @@
 # %%
-! pip install sentencepiece
+!pip install sentencepiece
 # %%
 from transformers import MarianMTModel, MarianTokenizer
 import torch
